@@ -62,9 +62,9 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
             rus_text = headline
 
             message_text = (
-                f"🇺🇿 <b>O'zbekcha:</b>\n"
+                f"🇺🇿\n"
                 f"{uzb_text}\n\n"
-                f"🇷🇺 <b>Русский:</b>\n"
+                f"🇷🇺\n"
                 f"{rus_text}\n\n"
                 f"{post_bottom}"
             )

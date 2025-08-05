@@ -23,6 +23,26 @@ client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
 
 @client.on(events.NewMessage)
 async def handle_message(event: events.newmessage.NewMessage.Event):
+    """
+        Telegram mijozidan yangi xabarlarni tutib oluvchi asinxron funksiyasi.
+
+        Ushbu funksiya ikkita asosiy vazifani bajaradi:
+        1. Agar foydalanuvchi "/channels" buyrug'ini yuborgan bo‘lsa:
+            - Telegramdagi barcha kanallar ro‘yxatini (chat_id, nomi, username) to‘playdi.
+            - Ushbu ro‘yxatni JSON formatida Django serveriga POST so‘rovi orqali yuboradi.
+            - Xabarni yuborish holatini terminalga chiqaradi.
+
+        2. Aks holda (ya'ni, oddiy kanal xabari bo‘lsa):
+            - Xabar faqat kanal turiga mansub bo‘lsa tekshiriladi (`PeerChannel`).
+            - Kanal xabari aniqlansa, uni admin Telegram botiga (`BOT_CHAT_ID`) forward qiladi.
+            - Forward muvaffaqiyatli yoki xatolik bilan yakunlansa, u terminalga chiqadi.
+
+        Xatoliklar turli bosqichlarda aniqlanadi va konsolga chiqariladi:
+        - Django serverga so‘rov yuborishda
+        - Kanal xabarini forward qilishda
+        - Event obyekti bilan ishlashda
+
+    """
     try:
         text = event.raw_text.strip()
 

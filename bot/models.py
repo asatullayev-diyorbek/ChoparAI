@@ -1,6 +1,9 @@
 from django.db import models
 
+
 class News(models.Model):
+    # buni hozirgi versiyada ishlatmadik. agar keyinchalik saytlardan
+    # yangiliklar olinadigan bo'lsa ishlatilsa bo'ladi
     title = models.CharField(
         max_length=500,
         verbose_name='Sarlavha'
@@ -35,6 +38,22 @@ class News(models.Model):
 
 
 class Channel(models.Model):
+    """
+        Kanal haqida ma'lumotlarni saqlovchi model.
+
+        Bu model Telegram kanal(lar)i haqida quyidagi ma'lumotlarni saqlaydi:
+        - title: Kanalning to'liq nomi.
+        - chat_id: Telegram kanalining noyob identifikatori (chat ID).
+        - username: Kanal username (agar mavjud bo‘lsa).
+        - is_get_post: Bot ushbu kanaldan xabarlarni olsinmi yo‘qmi belgisi (True/False).
+        - created_at: Ushbu kanal bazaga qo‘shilgan sana va vaqt.
+
+        __str__ metodi: Kanal nomi va chat ID ni birlashtirib ko‘rsatadi.
+
+        Meta:
+        - verbose_name: Admin interfeysida bitta kanal nomi uchun ko‘rsatiladi.
+        - verbose_name_plural: Admin interfeysida ko‘plik shaklda ko‘rsatiladi.
+    """
     title = models.CharField(max_length=500, verbose_name="Kanal nomi")
     chat_id = models.BigIntegerField(verbose_name="Kanal ID")
     username = models.CharField(max_length=255, null=True, blank=True, verbose_name="Username")
@@ -50,6 +69,20 @@ class Channel(models.Model):
 
 
 class MyChannel(models.Model):
+    """
+        Foydalanuvchining Telegram kanallarini saqlovchi model.
+
+        Maydonlar:
+            title (CharField): Kanalning nomi (sarlavhasi).
+            chat_id (BigIntegerField): Kanalning noyob Telegram chat ID raqami.
+            username (CharField): Kanalga tegishli Telegram username (ixtiyoriy).
+            is_send_post (BooleanField): Ushbu kanalga xabar yuborilsinmi yoki yo'q (haqiqat/false).
+            created_at (DateTimeField): Kanal bazaga qo‘shilgan vaqti (avtomatik yaratiladi).
+
+        Foydasi:
+            - Bu model Telegram orqali xabar yuboriladigan kanallarni boshqarish uchun ishlatiladi.
+            - Admin panelda har bir kanalni nomi va ID si bilan ko‘rish imkonini beradi.
+    """
     title = models.CharField(max_length=500, verbose_name="Kanal nomi")
     chat_id = models.BigIntegerField(verbose_name="Kanal ID")
     username = models.CharField(max_length=255, null=True, blank=True, verbose_name="Username")

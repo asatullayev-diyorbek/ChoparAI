@@ -7,6 +7,60 @@ from bot.models import Channel
 
 @csrf_exempt
 def channels(request):
+    """
+        Kanal ro'yxatini yangilovchi HTTP POST endpoint.
+
+        Bu funksiya tashqi manbadan kelayotgan `channel_list` event turidagi JSON so‘rovni qabul qiladi.
+        Yangi kanallar ro'yxati bazaga qo‘shiladi yoki yangilanadi, mavjud bo‘lmagan eski kanallar esa o‘chiriladi.
+
+        Faoliyat:
+        - So‘rov turi POST bo'lishi kerak.
+        - Content-Type `application/json` bo'lishi kerak.
+        - JSON ichida `event` qiymati `channel_list` bo‘lishi shart.
+        - `channels` nomli ro'yxat bo'lishi va har bir elementda `chat_id` bo'lishi kerak.
+        - Har bir kanal bo‘yicha `chat_id`, `title`, `username` ma’lumotlari yangilanadi yoki yangi yozuv yaratiladi.
+        - Mavjud, lekin so‘rovda yo‘q bo‘lgan kanallar o‘chiriladi.
+
+        Parametrlar:
+        - request (HttpRequest): Django POST so‘rovi. JSON formatda quyidagi ko‘rinishda bo'lishi kerak:
+            {
+                "event": "channel_list",
+                "channels": [
+                    {
+                        "chat_id": 123456789,
+                        "title": "Kanal nomi",
+                        "username": "kanal_username"
+                    },
+                    ...
+                ]
+            }
+
+        Javoblar:
+        - 200 OK: muvaffaqiyatli bajarilgan bo‘lsa:
+            {
+                "status": "success",
+                "received": <yangi/yoki yangilangan kanallar soni>,
+                "deleted": <o‘chirilgan kanallar soni>
+            }
+
+        - 400 Bad Request: noto‘g‘ri ma’lumot yuborilgan bo‘lsa:
+            {
+                "error": "Izoh",
+                "details": "Xatolik haqida batafsil (agar mavjud bo‘lsa)"
+            }
+
+        - 405 Method Not Allowed: agar POST bo‘lmasa
+
+        Misol:
+            curl -X POST https://<domain>/channels/ \
+                -H "Content-Type: application/json" \
+                -d '{
+                    "event": "channel_list",
+                    "channels": [
+                        {"chat_id": "123456", "title": "Test", "username": "test_channel"}
+                    ]
+                }'
+    """
     if request.method != 'POST':
         return JsonResponse({"error": "Only POST allowed"}, status=405)
 

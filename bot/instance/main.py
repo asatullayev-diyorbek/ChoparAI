@@ -4,6 +4,7 @@ from aiogram.filters import CommandStart
 from bot.instance.handlers.command_handler import handle_start
 from bot.instance.handlers.messages_handler import handle_all_messages
 
+# Bot webhook uchun funksiyalarni register qilish
 webhook_dp = Dispatcher()
 webhook_dp.message.register(handle_start, CommandStart())  # /start
 

@@ -131,7 +131,7 @@ def get_full_name(request):
     return "Guest"
 
 UNFOLD = {
-    "SITE_TITLE": "Bot Template Panel",
+    "SITE_TITLE": "nurinvest",
     "SITE_HEADER": lambda request: get_full_name(request),
     "SITE_SUBHEADER": "Administrator",
     "SITE_URL": "/",

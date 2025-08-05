@@ -61,13 +61,13 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
             uzb_text = translated_text
             rus_text = headline
 
-            message_text = f"""
-            🇺🇿 <b>O'zbekcha:</b>
-            {uzb_text}
-
-            🇷🇺 <b>Русский:</b>
-            {rus_text}
-            """
+            message_text = (
+                f"🇺🇿 <b>O'zbekcha:</b>\n"
+                f"{uzb_text}\n\n"
+                f"🇷🇺 <b>Русский:</b>\n"
+                f"{rus_text}\n\n"
+                f"{post_bottom}"
+            )
 
             for channel_id in my_channels:
                 # Media bilanmi yoki faqat matnmi

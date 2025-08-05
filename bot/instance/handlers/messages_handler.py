@@ -39,19 +39,27 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
             if "#реклама" in original_text:
                 return
 
+            # 2 yoki undan ko‘p yangi qator (abzats) bo‘yicha bo‘lish
+            paragraphs = original_text.strip().split('\n\n')
+
+            # Birinchi abzats — sarlavha sifatida
+            headline = paragraphs[0] if paragraphs else ""
+
+
+
             # # Test uchun
             # translated_text = "Test xabarda bu, ekonomichestki"
 
             # # Tarjima qilish
             translated_text = await translate_text(
-                text=original_text,
+                text=headline,
                 source_lang="rus_Cyrl",
                 target_lang="uzn_Latn",
                 model="sayqalchi"
             )
 
             uzb_text = translated_text
-            rus_text = original_text
+            rus_text = headline
 
             message_text = f"""
             🇺🇿 <b>O'zbekcha:</b>
@@ -62,7 +70,6 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
             """
 
             for channel_id in my_channels:
-                continue
                 # Media bilanmi yoki faqat matnmi
                 if message.photo:
                     # Agar rasmli post bo‘lsa

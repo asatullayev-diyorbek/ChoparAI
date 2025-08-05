@@ -39,7 +39,7 @@ async def extract_url_and_build_button(reply_markup: InlineKeyboardMarkup) -> In
             if button.url:
                 return InlineKeyboardMarkup(
                     inline_keyboard=[
-                        [InlineKeyboardButton(text="To‘liq o‘qish", url=button.url)]
+                        [InlineKeyboardButton(text="Batafsil/Подробнее ", url=button.url)]
                     ]
                 )
     return None

@@ -76,7 +76,7 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
                     await bot.send_photo(
                         chat_id=channel_id,
                         photo=message.photo[-1].file_id,  # eng yuqori sifatli variant
-                        caption=message_text + "\n\n" + post_bottom,
+                        caption=message_text,
                         parse_mode='html',
                         reply_markup= await extract_url_and_build_button(message.reply_markup)
                     )
@@ -84,7 +84,7 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
                     # Oddiy matnli xabar
                     await bot.send_message(
                         chat_id=channel_id,
-                        text=message_text + "\n\n" + post_bottom,
+                        text=message_text,
                         parse_mode="html",
                         disable_web_page_preview=True,
                         reply_markup=await extract_url_and_build_button(message.reply_markup)

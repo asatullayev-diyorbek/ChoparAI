@@ -48,15 +48,15 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
 
 
             # # Test uchun
-            # translated_text = "Test xabarda bu, ekonomichestki"
+            translated_text = "Test xabarda bu, ekonomichestki"
 
             # # Tarjima qilish
-            translated_text = await translate_text(
-                text=headline,
-                source_lang="rus_Cyrl",
-                target_lang="uzn_Latn",
-                model="sayqalchi"
-            )
+            # translated_text = await translate_text(
+            #     text=headline,
+            #     source_lang="rus_Cyrl",
+            #     target_lang="uzn_Latn",
+            #     model="sayqalchi"
+            # )
 
             uzb_text = translated_text
             rus_text = headline

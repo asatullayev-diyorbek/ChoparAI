@@ -54,7 +54,7 @@ async def handle_message(event: events.newmessage.NewMessage.Event):
                         from_peer = await client.get_input_entity(event.chat_id)
 
                         await client.forward_messages(
-                            entity=BOT_CHAT_ID,
+                            entity=int(BOT_CHAT_ID),
                             messages=event.message.id,
                             from_peer=from_peer  # kanal entity
                         )

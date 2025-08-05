@@ -62,6 +62,7 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
             """
 
             for channel_id in my_channels:
+                continue
                 # Media bilanmi yoki faqat matnmi
                 if message.photo:
                     # Agar rasmli post bo‘lsa

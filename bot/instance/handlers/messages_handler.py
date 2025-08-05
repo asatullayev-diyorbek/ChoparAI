@@ -36,15 +36,20 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
             my_channels = await get_my_channels()
             original_text = message.text or message.caption or ""
 
-            # # Tarjima qilish
-            # translated_text = await translate_text(
-            #     text=original_text,
-            #     source_lang="rus_Cyrl",
-            #     target_lang="uzn_Latn",
-            #     model="sayqalchi"
-            # )
+            if "#реклама" in original_text:
+                return
 
-            translated_text = "Test xabarda bu, ekonomichestki"
+            # # Test uchun
+            # translated_text = "Test xabarda bu, ekonomichestki"
+
+            # # Tarjima qilish
+            translated_text = await translate_text(
+                text=original_text,
+                source_lang="rus_Cyrl",
+                target_lang="uzn_Latn",
+                model="sayqalchi"
+            )
+
             for channel_id in my_channels:
                 # Media bilanmi yoki faqat matnmi
                 if message.photo:

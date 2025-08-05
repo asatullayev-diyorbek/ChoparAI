@@ -34,7 +34,10 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
 
         if is_true:
             my_channels = await get_my_channels()
-            original_text = message.text or message.caption or ""
+            original_text = message.html_text or message.caption or ""
+
+            if message.forward_from_chat.title == 'Trade Watcher' and not "JUST IN" in original_text:
+                return
 
             if "#реклама" in original_text:
                 return
@@ -58,8 +61,17 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
                 model="sayqalchi"
             )
 
+            translated_ru = None
+            if "JUST IN" in headline:
+                translated_ru = await translate_text(
+                    text=translated_text,
+                    source_lang="eng_Latn",
+                    target_lang="rus_Cyrl",
+                    model="sayqalchi"
+                )
+
             uzb_text = translated_text
-            rus_text = headline
+            rus_text = translated_ru if translated_ru else headline
 
             message_text = (
                 f"🇷🇺\n"
@@ -91,5 +103,3 @@ async def handle_all_messages(message: Message, bot: Bot) -> None:
                     )
 
             print("✅ Tarjima va yuborish yakunlandi.")
-
-        # pprint.pprint(message.__dict__)
